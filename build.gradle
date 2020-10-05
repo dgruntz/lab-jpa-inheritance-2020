@@ -1,0 +1,40 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+repositories {
+	mavenCentral()
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+compileJava.options.encoding = 'UTF-8'
+
+dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly("com.h2database:h2")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	implementation("org.springframework.boot:spring-boot-starter-web")
+}
+
+task zip(type: Zip) {
+	description "Creates student distribution of this lab."
+	group = 'distribution'
+
+	dependsOn wrapper
+
+	from projectDir
+
+	include 'build.gradle'
+	include 'gradlew'
+	include 'gradlew.bat'
+	include 'gradle/'
+	
+	include '.gitignore'
+	include '.settings/org.eclipse.core.resources.prefs'
+
+	include 'src/**'
+}
